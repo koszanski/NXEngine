@@ -67,7 +67,7 @@ void pause_tick()
     const char *str = "Start: Options";
     cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
     cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
-    f3wd = font_draw(cx, cy, "L", 0);
+    f3wd = font_draw(cx, cy, "Start", 0);
 #elif _MOTOMAGX
     const char *str = "#:Options";
     cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;

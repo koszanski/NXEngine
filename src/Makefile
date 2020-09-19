@@ -342,6 +342,28 @@ clean:
 	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 
+opk: all
+	@mksquashfs \
+	../cavestory/default.retrofw.desktop \
+	../cavestory/nx.sh \
+	../cavestory/nx.dge \
+	../cavestory/data \
+	../cavestory/endpic \
+	../cavestory/pxt \
+	../cavestory/xm \
+	../cavestory/nx.man.txt \
+	../cavestory/nx_icon_48.png \
+	../cavestory/drum.pcm \
+	../cavestory/settings.dat \
+	../cavestory/smalfont.bmp \
+	../cavestory/sndcache.pcm \
+	../cavestory/sprites.sif \
+	../cavestory/stage.dat \
+	../cavestory/tilekey.dat \
+	../cavestory/wavetable.dat \
+	../cavestory/cavestory.opk \
+	-all-root -noappend -no-exports -no-xattrs
+
 ####### Sub-libraries
 
 distclean: clean

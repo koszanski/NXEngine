@@ -30,5 +30,3 @@ profile.dat and settings file is located in $HOME/.cavestory/
 [NXEngine](http://nxengine.sourceforge.net/) by Caitlin Shaw, GPLv3
 
 [NXEngine](https://github.com/EXL/NXEngine) fork by EXL, implemented SDL_Mixer support.
-
-[rs97-NXEngine](https://github.com/jbanes/rs97-nxengine) by jbanes, later maintained by pingflood, koszanski

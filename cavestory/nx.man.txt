@@ -18,4 +18,3 @@ Credits:
 <Cave Story ~ Doukutsu Monogatari> (C) Studio Pixel 2004
 <NXEngine> by Caitlin Shaw, GPLv3
 <NXEngine> fork by EXL, implemented SDL_Mixer support.
-<rs97-NXEngine> by jbanes, later maintained by pingflood, koszanski

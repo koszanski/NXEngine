@@ -225,31 +225,28 @@ void c------------------------------() {}
 */
 
 // returns the filename for a save file given it's number
-const char *GetProfileName(int num)
+char *GetProfileName(int num)
 {
-#ifndef __HAIKU__
-	if (num == 0)
-		return "profile.dat";
-	else
-		return stprintf("profile%d.dat", num+1);
-#else
-	char path[PATH_MAX];
-	char *haikuPath = getHaikuSettingsPath();
-	strcpy(path, haikuPath);
-	if (num == 0) {
-		strcat(path, "profile.dat");
-	} else {
-		strcat(path, "profile%d.dat");
-	}
-	free(haikuPath);
-	return stprintf(path, num+1);
-#endif
-}
+    char *profilename = (char *)malloc(1024);
 
+    if (num == 0)
+        sprintf(profilename, "%s/.cavestory/profile.dat", getenv("HOME"));
+    else
+        sprintf(profilename, "%s/.cavestory/profile%d.dat", getenv("HOME"), num+1);
+
+    return profilename;
+    
+}
+ 
 // returns whether the given save file slot exists
 bool ProfileExists(int num)
 {
-	return file_exists(GetProfileName(num));
+    char *path = GetProfileName(num);
+    bool exists = file_exists(path);
+
+    free(path);
+
+    return exists;
 }
 
 bool AnyProfileExists()

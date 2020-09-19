@@ -1,4 +1,3 @@
-
 #include <SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,11 +25,7 @@ bool settings_load(Settings *setfile)
 		stat("No saved settings; using defaults.");
 		
 		memset(setfile, 0, sizeof(Settings));
-#if defined (_480X272) || defined (_320X240)
-        setfile->resolution = 0;		// 640x480 Windowed, should be safe value
-#else
-        setfile->resolution = 2;
-#endif
+        setfile->resolution = 0;		
 		setfile->last_save_slot = 0;
 		setfile->multisave = true;
 		
@@ -42,11 +37,7 @@ bool settings_load(Settings *setfile)
 		setfile->emulate_bugs = false;
 		setfile->no_quake_in_hell = false;
 		setfile->inhibit_fullscreen = false;
-#ifndef __HAIKU__
-		setfile->files_extracted = false;
-#else
 		setfile->files_extracted = true;
-#endif
 		
 		// I found that 8bpp->32bpp blits are actually noticably faster
 		// than 32bpp->32bpp blits on several systems I tested. Not sure why
@@ -77,22 +68,15 @@ void c------------------------------() {}
 static bool tryload(Settings *setfile)
 {
 FILE *fp;
+char path[1024];
 
 	stat("Loading settings...");
-
-#ifdef __HAIKU__
-	char path[PATH_MAX];
-	char *haikuPath = getHaikuSettingsPath();
-	strcpy(path, haikuPath);
-	strcat(path, setfilename);
-	free(haikuPath);
+	sprintf(path, "%s/.cavestory/%s", getenv("HOME"), setfilename);
+	
 	fp = fileopen(path, "rb");
-#else
-	fp = fileopen(setfilename, "rb");
-#endif
 	if (!fp)
 	{
-		stat("Couldn't open file %s.", setfilename);
+		stat("Couldn't open file %s.", path);
 		return 1;
 	}
 	
@@ -112,24 +96,17 @@ FILE *fp;
 bool settings_save(Settings *setfile)
 {
 FILE *fp;
+char path[1024];
 
 	if (!setfile)
 		setfile = &normal_settings;
 	
 	stat("Writing settings...");
-#ifdef __HAIKU__
-	char path[PATH_MAX];
-	char *haikuPath = getHaikuSettingsPath();
-	strcpy(path, haikuPath);
-	strcat(path, setfilename);
-	free(haikuPath);
+	sprintf(path, "%s/.cavestory/%s", getenv("HOME"), setfilename);
 	fp = fileopen(path, "wb");
-#else
-	fp = fileopen(setfilename, "wb");
-#endif
 	if (!fp)
 	{
-		stat("Couldn't open file %s.", setfilename);
+		stat("Couldn't open file %s.", path);
 		return 1;
 	}
 	

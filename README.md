@@ -5,9 +5,10 @@ Cave Story port for RetroFW devices based on NXEngine 1.0.0.4.
 
 * SDL
 * SDL_ttf
+* SDL_mixer
 * libdrm
 
-To build, simply `make`, followed by `make opk`.
+To build, simply `make`, followed by `make opk` in src.
 
 profile.dat and settings file is located in $HOME/.cavestory/
 

@@ -116,7 +116,7 @@ bool Graphics::InitVideo()
 	if (drawtarget == screen) drawtarget = NULL;
 	if (screen) delete screen;
 	
-	uint32_t flags = SDL_SWSURFACE | SDL_HWPALETTE;
+	uint32_t flags = SDL_HWSURFACE | SDL_HWPALETTE | SDL_TRIPLEBUF;
 	if (is_fullscreen) flags |= SDL_FULLSCREEN;
 	
 	#ifndef __SDLSHIM__

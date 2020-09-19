@@ -2,15 +2,20 @@
 #include "nx.h"
 #include "input.fdh"
 
-#ifdef _MOTOEZX
-#include "platform/EZX/EZX_SDL_PollEvent.h"
-#endif
-
 uint8_t mappings[SDLK_LAST];
 
 bool inputs[INPUT_COUNT];
 bool lastinputs[INPUT_COUNT];
 int last_sdl_key;
+
+#define BTN_X			SDLK_SPACE
+#define BTN_A			SDLK_LCTRL
+#define BTN_B			SDLK_LALT
+#define BTN_Y			SDLK_LSHIFT
+#define BTN_L			SDLK_TAB
+#define BTN_R			SDLK_BACKSPACE
+#define BTN_START		SDLK_RETURN
+#define BTN_SELECT		SDLK_ESCAPE
 
 bool input_init(void)
 {
@@ -42,77 +47,34 @@ bool input_init(void)
 		mappings[SDLK_UP] = UPKEY;
 		mappings[SDLK_DOWN] = DOWNKEY;
 
-#ifdef _DINGUX
-        mappings[SDLK_LCTRL] = JUMPKEY;
-        mappings[SDLK_LALT] = FIREKEY;
-        mappings[SDLK_SPACE] = PREVWPNKEY;
-        mappings[SDLK_LSHIFT] = NEXTWPNKEY;
-        mappings[SDLK_BACKSPACE] = INVENTORYKEY;
-        mappings[SDLK_RETURN] = MAPSYSTEMKEY;
-#elif _MOTOMAGX
-        mappings[SDLK_PLUS] = JUMPKEY;
-        mappings[SDLK_RETURN] = FIREKEY;
-        mappings[SDLK_0] = PREVWPNKEY;
-        mappings[SDLK_8] = NEXTWPNKEY;
-        mappings[SDLK_2] = INVENTORYKEY;
-        mappings[SDLK_5] = MAPSYSTEMKEY;
-#elif _MOTOEZX
-        mappings[SDLK_PLUS] = JUMPKEY;
-        mappings[SDLK_MINUS] = FIREKEY;
-        mappings[SDLK_d] = PREVWPNKEY;
-        mappings[SDLK_c] = NEXTWPNKEY;
-        mappings[SDLK_RETURN] = INVENTORYKEY;
-        mappings[SDLK_b] = MAPSYSTEMKEY;
-#else
-        mappings[SDLK_z] = JUMPKEY;
-        mappings[SDLK_x] = FIREKEY;
-        mappings[SDLK_a] = PREVWPNKEY;
-        mappings[SDLK_s] = NEXTWPNKEY;
-        mappings[SDLK_q] = INVENTORYKEY;
-        mappings[SDLK_w] = MAPSYSTEMKEY;
-#endif
-
-#if defined(_MOTOMAGX) || defined(_MOTOEZX)
-        mappings[SDLK_PAUSE] = ESCKEY;
-#else
-        mappings[SDLK_ESCAPE] = ESCKEY;
-#endif
-
-        mappings[SDLK_F1] = F1KEY;
-        mappings[SDLK_F2] = F2KEY;
-        mappings[SDLK_F3] = F3KEY;
-        mappings[SDLK_F4] = F4KEY;
-        mappings[SDLK_F5] = F5KEY;
-        mappings[SDLK_F6] = F6KEY;
-        mappings[SDLK_F7] = F7KEY;
-        mappings[SDLK_F8] = F8KEY;
-        mappings[SDLK_F9] = F9KEY;
-        mappings[SDLK_F10] = F10KEY;
-        mappings[SDLK_F11] = F11KEY;
-        mappings[SDLK_F12] = F12KEY;
-#ifdef _MOTOMAGX
-        mappings[SDLK_HASH] = OPTIONS_KEY; // #
-#elif _MOTOEZX
-        mappings[SDLK_e] = OPTIONS_KEY; // Mod Key + Camera
-#else
-        mappings[SDLK_TAB] = OPTIONS_KEY;
-#endif
-
-#if !defined(_DINGUX) && !defined(_MOTOEZX) && !defined(_MOTOMAGX)
-        mappings[SDLK_SPACE] = FREEZE_FRAME_KEY;
-#else
-        mappings[SDLK_s] = FREEZE_FRAME_KEY;
-#endif
-
-#if !defined(_MOTOEZX)
-		mappings[SDLK_c] = FRAME_ADVANCE_KEY;
-#else
-		mappings[SDLK_i] = FRAME_ADVANCE_KEY;
-#endif
-		mappings[SDLK_v] = DEBUG_FLY_KEY;
+		mappings[BTN_B] = JUMPKEY;
+		mappings[BTN_Y] = FIREKEY;
+		mappings[BTN_A] = PREVWPNKEY;
+		mappings[BTN_X] = NEXTWPNKEY;
+		mappings[BTN_L] = INVENTORYKEY;
+		mappings[BTN_R] = MAPSYSTEMKEY;
+		
+		mappings[BTN_SELECT] = ESCKEY;
+		mappings[BTN_START] = OPTIONS_KEY;
+		
+		mappings[SDLK_F1] = F1KEY;
+		mappings[SDLK_F2] = F2KEY;
+		mappings[SDLK_F3] = F3KEY;
+		mappings[SDLK_F4] = F4KEY;
+		mappings[SDLK_F5] = F5KEY;
+		mappings[SDLK_F6] = F6KEY;
+		mappings[SDLK_F7] = F7KEY;
+		mappings[SDLK_F8] = F8KEY;
+		mappings[SDLK_F9] = F9KEY;
+		mappings[SDLK_F10] = F10KEY;
+		mappings[SDLK_F11] = F11KEY;
+		mappings[SDLK_F12] = F12KEY;
+		
+		mappings[SDLK_a] = FREEZE_FRAME_KEY;
+		mappings[SDLK_b] = FRAME_ADVANCE_KEY;
+		mappings[SDLK_c] = DEBUG_FLY_KEY;
 	}
 	#endif
-	
 	return 0;
 }
 
@@ -322,3 +284,8 @@ bool justpushed(int k)
 {
 	return (inputs[k] && !lastinputs[k]);
 }
+
+
+
+
+

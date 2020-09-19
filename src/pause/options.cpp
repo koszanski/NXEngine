@@ -140,7 +140,6 @@ Dialog *dlg = opt.dlg;
 
 	dlg->Clear();
 	
-    // dlg->AddItem(LC_RES, _res_change, _res_get);
     dlg->AddItem(LC_KEYS, EnterControlsMenu);
     dlg->AddItem(LC_REPLAY, EnterReplayMenu);
 	
@@ -172,67 +171,7 @@ void LeavingMainMenu()
 	opt.InMainMenu = false;
 }
 
-void _res_get(ODItem *item)
-{
-	const char **reslist = Graphics::GetResolutions();
-	
-	if (settings->resolution < 0 || \
-		settings->resolution >= count_string_list(reslist))
-	{
-		item->suffix[0] = 0;
-	}
-	else
-    {
-#if defined (_480X272) || defined (_320X240)
-        strcpy(item->suffix, reslist[0]);
-#else
-        strcpy(item->suffix, reslist[settings->resolution]);
-#endif
-	}
-}
 
-
-void _res_change(ODItem *item, int dir)
-{
-const char **reslist = Graphics::GetResolutions();
-int numres = count_string_list(reslist);
-int newres;
-
-	sound(SND_DOOR);
-	
-	newres = (settings->resolution + dir);
-	if (newres >= numres) newres = 0;
-	if (newres < 0) newres = (numres - 1);
-	
-	// because on my computer, a SDL bug causes switching to fullscreen to
-	// not restore the resolution properly on exit, and it keeps messing up all
-	// the windows when I press it accidently.
-	if (newres == 0 && settings->inhibit_fullscreen)
-	{
-        new Message(LC_FULLSCREEN_DIS, LC_FULLSCREEN_CON);
-		sound(SND_GUN_CLICK);
-		return;
-	}
-#if (defined(_L10N_CP1251) && (!defined (_480X272) || !defined (_320X240))) || defined(__HAIKU__) // L10N Hack
-    if (newres == 1) {
-        new Message(LC_RES_FAILED_320);
-        return;
-    }
-#endif
-    if (!Graphics::SetResolution(newres, true))
-	{
-#if defined (_480X272) || defined (_320X240)
-        settings->resolution = 0;
-#else
-        settings->resolution = newres;
-#endif
-	}
-	else
-	{
-        new Message(LC_RES_FAILED);
-		sound(SND_GUN_CLICK);
-    }
-}
 
 /************ DEBUG MENU ************/
 static void EnterDebugMenu(ODItem *item, int dir)

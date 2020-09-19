@@ -140,7 +140,7 @@ Dialog *dlg = opt.dlg;
 
 	dlg->Clear();
 	
-    dlg->AddItem(LC_RES, _res_change, _res_get);
+    // dlg->AddItem(LC_RES, _res_change, _res_get);
     dlg->AddItem(LC_KEYS, EnterControlsMenu);
     dlg->AddItem(LC_REPLAY, EnterReplayMenu);
 	

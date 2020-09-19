@@ -1,5 +1,5 @@
 # cavestory
-Cave Story port for RetroFW devices based on NXEngine 1.0.0.4.
+Cave Story port for RetroFW devices based on NXEngine 1.0.0.4, using SDL_Mixer to eliminate slowdown when playing music.
 
 ### Build Requirements:
 
